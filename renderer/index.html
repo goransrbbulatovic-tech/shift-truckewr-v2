@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raspored Smjena — by AcoRonaldo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══ TITLE BAR ══════════════════════════════════════════════════════════ -->
+<div id="titlebar">
+  <div class="tb-drag">
+    <div class="tb-logo">
+      <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
+        <rect width="32" height="32" rx="7" fill="#06b6d4"/>
+        <rect x="5" y="9" width="22" height="15" rx="2" fill="#0a1628" stroke="#06b6d4" stroke-width="1.5"/>
+        <rect x="5" y="9" width="22" height="5" rx="2" fill="#06b6d4"/>
+        <rect x="9" y="7" width="2" height="4" rx="1" fill="#f59e0b"/>
+        <rect x="21" y="7" width="2" height="4" rx="1" fill="#f59e0b"/>
+        <rect x="9" y="17" width="3" height="2.5" rx="0.5" fill="#06b6d4"/>
+        <rect x="14" y="17" width="3" height="2.5" rx="0.5" fill="#22d3ee"/>
+        <rect x="19" y="17" width="3" height="2.5" rx="0.5" fill="#06b6d4"/>
+        <rect x="9" y="21" width="3" height="2.5" rx="0.5" fill="#22d3ee"/>
+        <rect x="14" y="21" width="3" height="2.5" rx="0.5" fill="#06b6d4"/>
+        <rect x="19" y="21" width="3" height="2.5" rx="0.5" fill="#f59e0b"/>
+      </svg>
+    </div>
+    <span class="tb-title">Raspored Smjena <span class="tb-by">by AcoRonaldo</span></span>
+  </div>
+  <div class="tb-controls">
+    <button class="tb-btn" id="btn-min" title="Minimizuj">&#8211;</button>
+    <button class="tb-btn" id="btn-max" title="Maksimiziraj">&#9633;</button>
+    <button class="tb-btn tb-close" id="btn-close" title="Zatvori">&#10005;</button>
+  </div>
+</div>
+
+<!-- ══ LAYOUT ══════════════════════════════════════════════════════════════ -->
+<div id="layout">
+
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="nav-section-label">RASPORED</div>
+    <button class="nav-btn active" data-page="import">
+      <svg class="nav-ico" viewBox="0 0 24 24"><path d="M12 16l-4-4h3V4h2v8h3l-4 4z"/><path d="M20 18H4v2h16v-2z"/></svg>
+      Uvoz Fajla
+    </button>
+    <button class="nav-btn" data-page="calendar">
+      <svg class="nav-ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke-width="1.8" fill="none" stroke="currentColor"/><line x1="3" y1="9" x2="21" y2="9" stroke="currentColor" stroke-width="1.8"/><line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="1.8"/><line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="1.8"/></svg>
+      Kalendar Smjena
+    </button>
+    <button class="nav-btn" data-page="edit">
+      <svg class="nav-ico" viewBox="0 0 24 24"><path d="M4 20h4l10.5-10.5-4-4L4 16v4z" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M13.5 6.5l4 4" stroke="currentColor" stroke-width="1.8"/></svg>
+      Izmjena Smjena
+    </button>
+    <button class="nav-btn" data-page="export">
+      <svg class="nav-ico" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" stroke-width="1.8" fill="none"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="1.8" fill="none"/><line x1="12" y1="18" x2="12" y2="12" stroke="currentColor" stroke-width="1.8"/><polyline points="9 15 12 12 15 15" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
+      Izvoz (XLS/PDF)
+    </button>
+    <div class="nav-divider"></div>
+    <div class="nav-section-label">ALATI</div>
+    <button class="nav-btn" data-page="reminder">
+      <svg class="nav-ico" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
+      Podsjetnici
+    </button>
+    <button class="nav-btn" data-page="themes">
+      <svg class="nav-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M12 3a9 9 0 000 18" fill="currentColor" opacity=".2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
+      Teme i Pozadina
+    </button>
+    <div class="sidebar-footer">
+      <div class="sidebar-file-info" id="sidebar-file-info">Nema učitanog fajla</div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main id="main">
+
+    <!-- ═══ PAGE: IMPORT ═══════════════════════════════════════════════════ -->
+    <div class="page active" id="page-import">
+      <div class="page-header">
+        <h1 class="page-title">Uvoz Rasporeda</h1>
+        <p class="page-sub">Učitaj Excel fajl sa rasporedom smjena</p>
+      </div>
+
+      <div id="drop-zone" class="drop-zone">
+        <div class="drop-inner">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none">
+            <path d="M12 16l-4-4h3V4h2v8h3l-4 4z" fill="#06b6d4"/>
+            <path d="M20 18H4v2h16v-2z" fill="#06b6d4" opacity=".6"/>
+          </svg>
+          <div class="drop-title">Prevuci Excel fajl ovdje</div>
+          <div class="drop-sub">ili</div>
+          <button class="btn-primary" id="btn-open-file">Odaberi fajl</button>
+          <div class="drop-hint">Podržano: .xlsx &nbsp;·&nbsp; .xls &nbsp;·&nbsp; .xlsm &nbsp;·&nbsp; .csv</div>
+        </div>
+      </div>
+
+      <!-- After loading: person picker -->
+      <div id="person-picker" class="person-picker hidden">
+        <div class="section-header">
+          <h2 class="section-title">Odaberi osobu</h2>
+          <input type="text" id="search-person" class="search-input" placeholder="Pretraži ime...">
+        </div>
+        <div id="person-grid" class="person-grid"></div>
+        <div class="import-info" id="import-info"></div>
+      </div>
+    </div>
+
+    <!-- ═══ PAGE: CALENDAR ══════════════════════════════════════════════════ -->
+    <div class="page" id="page-calendar">
+      <div class="page-header-row">
+        <div>
+          <h1 class="page-title" id="cal-person-name">Kalendar Smjena</h1>
+          <p class="page-sub" id="cal-stats-line">Odaberi osobu da vidiš smjene</p>
+        </div>
+        <div class="cal-month-nav">
+          <button class="icon-btn" id="cal-prev">&#8249;</button>
+          <span class="cal-month-label" id="cal-month-label">—</span>
+          <button class="icon-btn" id="cal-next">&#8250;</button>
+          <button class="btn-ghost" id="cal-today">Danas</button>
+        </div>
+      </div>
+
+      <!-- Stats row -->
+      <div class="stats-row" id="stats-row">
+        <div class="stat-card">
+          <div class="stat-val" id="stat-shifts">—</div>
+          <div class="stat-label">Smjena ovaj mj.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="stat-hours">—</div>
+          <div class="stat-label">Sati rada</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="stat-next">—</div>
+          <div class="stat-label">Sljedeća smjena</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="stat-type">—</div>
+          <div class="stat-label">Najčešći tip</div>
+        </div>
+      </div>
+
+      <!-- Calendar grid -->
+      <div class="cal-wrapper">
+        <div class="cal-weekdays">
+          <div>PON</div><div>UTO</div><div>SRI</div>
+          <div>ČET</div><div>PET</div><div>SUB</div><div>NED</div>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+      </div>
+
+      <!-- Legend -->
+      <div class="shift-legend" id="shift-legend"></div>
+    </div>
+
+    <!-- ═══ PAGE: EDIT ══════════════════════════════════════════════════════ -->
+    <div class="page" id="page-edit">
+      <div class="page-header-row">
+        <div>
+          <h1 class="page-title">Izmjena Smjena</h1>
+          <p class="page-sub" id="edit-person-label">Odaberi osobu i izmijeni smjene</p>
+        </div>
+        <div class="row-gap">
+          <button class="btn-primary" id="btn-add-shift">+ Dodaj Smjenu</button>
+          <button class="btn-ghost" id="btn-save-changes">Sačuvaj Izmjene</button>
+        </div>
+      </div>
+      <div class="edit-filter-row">
+        <select class="select-input" id="edit-month-filter">
+          <option value="">Svi mjeseci</option>
+        </select>
+        <input type="text" class="search-input" id="edit-search" placeholder="Pretraži datum...">
+      </div>
+      <div class="table-wrap">
+        <table class="data-table" id="edit-table">
+          <thead>
+            <tr>
+              <th>Datum</th><th>Dan</th><th>Početak</th>
+              <th>Kraj</th><th>Tip Smjene</th><th>Sati</th><th>Akcija</th>
+            </tr>
+          </thead>
+          <tbody id="edit-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ PAGE: EXPORT ════════════════════════════════════════════════════ -->
+    <div class="page" id="page-export">
+      <div class="page-header">
+        <h1 class="page-title">Izvoz Rasporeda</h1>
+        <p class="page-sub">Generiši profesionalni Excel ili PDF izvještaj</p>
+      </div>
+      <div class="export-grid">
+
+        <div class="export-card" id="export-excel-card">
+          <div class="export-card-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48">
+              <rect width="48" height="48" rx="10" fill="#1a6e3c"/>
+              <rect x="8" y="10" width="20" height="28" rx="2" fill="#fff" opacity=".15"/>
+              <text x="14" y="30" font-size="16" font-weight="700" fill="#22c55e">XLS</text>
+              <rect x="28" y="18" width="12" height="2" rx="1" fill="#4ade80"/>
+              <rect x="28" y="23" width="12" height="2" rx="1" fill="#4ade80"/>
+              <rect x="28" y="28" width="8" height="2" rx="1" fill="#4ade80"/>
+            </svg>
+          </div>
+          <h3 class="export-card-title">Excel Izvještaj</h3>
+          <p class="export-card-desc">Formatirani .xlsx fajl sa smjenama odabrane osobe. Uključuje tabelu i statistike.</p>
+          <div class="export-options">
+            <label class="check-label"><input type="checkbox" id="exp-all-months" checked> Svi mjeseci</label>
+            <label class="check-label"><input type="checkbox" id="exp-stats" checked> Uključi statistike</label>
+            <label class="check-label"><input type="checkbox" id="exp-colors" checked> Boje po tipu smjene</label>
+          </div>
+          <button class="btn-success" id="btn-export-excel">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 16l-4-4h3V4h2v8h3l-4 4z" fill="currentColor"/><path d="M20 18H4v2h16v-2z" fill="currentColor" opacity=".7"/></svg>
+            Preuzmi Excel
+          </button>
+        </div>
+
+        <div class="export-card" id="export-pdf-card">
+          <div class="export-card-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48">
+              <rect width="48" height="48" rx="10" fill="#7c2d12"/>
+              <rect x="8" y="10" width="20" height="28" rx="2" fill="#fff" opacity=".15"/>
+              <text x="14" y="30" font-size="16" font-weight="700" fill="#f97316">PDF</text>
+              <rect x="28" y="18" width="12" height="2" rx="1" fill="#fb923c"/>
+              <rect x="28" y="23" width="12" height="2" rx="1" fill="#fb923c"/>
+              <rect x="28" y="28" width="8" height="2" rx="1" fill="#fb923c"/>
+            </svg>
+          </div>
+          <h3 class="export-card-title">PDF Izvještaj</h3>
+          <p class="export-card-desc">Profesionalni PDF sa kalendarom smjena i statistikama. Spreman za štampu ili slanje.</p>
+          <div class="export-options">
+            <label class="check-label"><input type="radio" name="pdf-orient" value="landscape" checked> Horizontalno (A4)</label>
+            <label class="check-label"><input type="radio" name="pdf-orient" value="portrait"> Vertikalno (A4)</label>
+          </div>
+          <button class="btn-danger" id="btn-export-pdf">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 16l-4-4h3V4h2v8h3l-4 4z" fill="currentColor"/><path d="M20 18H4v2h16v-2z" fill="currentColor" opacity=".7"/></svg>
+            Preuzmi PDF
+          </button>
+        </div>
+
+      </div>
+      <div class="export-preview" id="export-preview">
+        <h3 class="section-title" style="margin-bottom:1rem">Pregled izvoza</h3>
+        <div id="export-preview-content">Učitaj fajl i odaberi osobu da vidiš pregled.</div>
+      </div>
+    </div>
+
+    <!-- ═══ PAGE: REMINDER ══════════════════════════════════════════════════ -->
+    <div class="page" id="page-reminder">
+      <div class="page-header-row">
+        <div>
+          <h1 class="page-title">Podsjetnici</h1>
+          <p class="page-sub">Bilješke, zadaci i lični podsjetnici</p>
+        </div>
+        <button class="btn-primary" id="btn-add-reminder">+ Novi Podsjetnik</button>
+      </div>
+
+      <!-- Mini calendar -->
+      <div class="reminder-layout">
+        <div class="reminder-cal-col">
+          <div class="reminder-cal-header">
+            <button class="icon-btn" id="rem-cal-prev">&#8249;</button>
+            <span id="rem-cal-label">—</span>
+            <button class="icon-btn" id="rem-cal-next">&#8250;</button>
+          </div>
+          <div class="rem-weekdays">
+            <div>P</div><div>U</div><div>S</div><div>Č</div><div>P</div><div>S</div><div>N</div>
+          </div>
+          <div class="rem-grid" id="rem-grid"></div>
+        </div>
+        <div class="reminder-list-col">
+          <div class="reminder-filter-row">
+            <button class="filter-chip active" data-filter="all">Sve</button>
+            <button class="filter-chip" data-filter="work">Posao</button>
+            <button class="filter-chip" data-filter="personal">Lično</button>
+            <button class="filter-chip" data-filter="urgent">Hitno</button>
+          </div>
+          <div id="reminder-list" class="reminder-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PAGE: THEMES ════════════════════════════════════════════════════ -->
+    <div class="page" id="page-themes">
+      <div class="page-header">
+        <h1 class="page-title">Teme i Pozadina</h1>
+        <p class="page-sub">Prilagodi izgled aplikacije</p>
+      </div>
+
+      <div class="themes-section">
+        <h3 class="section-title">Odaberi temu</h3>
+        <div class="theme-grid">
+          <div class="theme-card active" data-theme="midnight">
+            <div class="theme-preview tp-midnight"></div>
+            <div class="theme-name">Midnight Blue</div>
+          </div>
+          <div class="theme-card" data-theme="carbon">
+            <div class="theme-preview tp-carbon"></div>
+            <div class="theme-name">Carbon Dark</div>
+          </div>
+          <div class="theme-card" data-theme="forest">
+            <div class="theme-preview tp-forest"></div>
+            <div class="theme-name">Forest Night</div>
+          </div>
+          <div class="theme-card" data-theme="crimson">
+            <div class="theme-preview tp-crimson"></div>
+            <div class="theme-name">Crimson Pro</div>
+          </div>
+          <div class="theme-card" data-theme="aurora">
+            <div class="theme-preview tp-aurora"></div>
+            <div class="theme-name">Aurora</div>
+          </div>
+          <div class="theme-card" data-theme="steel">
+            <div class="theme-preview tp-steel"></div>
+            <div class="theme-name">Steel Gray</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="themes-section">
+        <h3 class="section-title">Pozadina</h3>
+        <div class="bg-options">
+          <button class="btn-ghost" id="btn-pick-image">📷 Odaberi sliku</button>
+          <button class="btn-ghost" id="btn-pick-color">🎨 Odaberi boju</button>
+          <input type="color" id="bg-color-picker" value="#080d1a" style="opacity:0;position:absolute;width:0">
+          <button class="btn-ghost" id="btn-reset-bg">↩ Resetuj</button>
+        </div>
+        <div class="bg-opacity-row">
+          <label class="opacity-label">Prozirnost overlay-a:</label>
+          <input type="range" id="bg-opacity" min="0" max="100" value="70" class="range-input">
+          <span id="bg-opacity-val">70%</span>
+        </div>
+        <div class="current-bg-preview" id="current-bg-preview">Nema prilagođene pozadine</div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ══ MODAL: Add/Edit Shift ════════════════════════════════════════════════ -->
+<div id="modal-shift" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-shift-title">Dodaj Smjenu</h3>
+      <button class="modal-close" id="modal-shift-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Osoba</label>
+          <input type="text" class="text-input" id="ms-person" placeholder="Upiši ili odaberi ime..." list="ms-person-list" autocomplete="off">
+          <datalist id="ms-person-list"></datalist>
+        </div>
+        <div class="form-group">
+          <label>Datum</label>
+          <input type="date" class="text-input" id="ms-date">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Početak smjene</label>
+          <input type="time" class="text-input" id="ms-start">
+        </div>
+        <div class="form-group">
+          <label>Kraj smjene</label>
+          <input type="time" class="text-input" id="ms-end">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Tip smjene</label>
+        <select class="select-input" id="ms-type">
+          <option value="night">🌙 Noćna (00:00 – 06:30)</option>
+          <option value="morning" selected>🌅 Jutarnja (06:30 – 12:00)</option>
+          <option value="afternoon">☀️ Poslijepodnevna (12:00 – 18:00)</option>
+          <option value="evening">🌆 Večernja (18:00 – 00:00)</option>
+          <option value="custom">⚙️ Prilagođena</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Napomena (opcionalno)</label>
+        <input type="text" class="text-input" id="ms-note" placeholder="Npr. zamjena, prekovremeno...">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" id="modal-shift-cancel">Otkaži</button>
+      <button class="btn-primary" id="modal-shift-save">Sačuvaj</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: Add Reminder ══════════════════════════════════════════════════ -->
+<div id="modal-reminder" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Novi Podsjetnik</h3>
+      <button class="modal-close" id="modal-rem-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Naslov</label>
+        <input type="text" class="text-input" id="rem-title" placeholder="Unesi naslov...">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Datum</label>
+          <input type="date" class="text-input" id="rem-date">
+        </div>
+        <div class="form-group">
+          <label>Kategorija</label>
+          <select class="select-input" id="rem-category">
+            <option value="work">Posao</option>
+            <option value="personal">Lično</option>
+            <option value="urgent">Hitno</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Opis</label>
+        <textarea class="text-input" id="rem-desc" rows="3" placeholder="Detalji..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" id="modal-rem-cancel">Otkaži</button>
+      <button class="btn-primary" id="modal-rem-save">Dodaj Podsjetnik</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PRINT OVERLAY ════════════════════════════════════════════════════════ -->
+<div id="print-overlay" class="hidden">
+  <div id="print-content"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="parser.js"></script>
+<script src="exporter.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
